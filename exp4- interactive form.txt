@@ -1,0 +1,164 @@
+exp4-
+main.dart-
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: StudentForm(),
+    );
+  }
+}
+
+class StudentForm extends StatefulWidget {
+  @override
+  _StudentFormState createState() => _StudentFormState();
+}
+
+class _StudentFormState extends State<StudentForm> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  String _selectedCourse = 'Flutter';
+  String _gender = 'Male';
+  bool _isTermsAccepted = false;
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Form Submitted!')));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Please fill in all fields!')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Student Form'),
+        backgroundColor: Colors.teal,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              // Name input
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                    labelText: 'Name', border: OutlineInputBorder()),
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter your name' : null,
+              ),
+              SizedBox(height: 10),
+              // Age input
+              TextFormField(
+                controller: _ageController,
+                decoration: InputDecoration(
+                    labelText: 'Age', border: OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter your age' : null,
+              ),
+              SizedBox(height: 10),
+              // Email input
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                    labelText: 'Email', border: OutlineInputBorder()),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your email';
+                  } else if (!value.contains('@')) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              // Gender radio buttons
+              Row(
+                children: [
+                  Text('Gender:'),
+                  Radio<String>(
+                    value: 'Male',
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value!;
+                      });
+                    },
+                  ),
+                  Text('Male'),
+                  Radio<String>(
+                    value: 'Female',
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value!;
+                      });
+                    },
+                  ),
+                  Text('Female'),
+                ],
+              ),
+              SizedBox(height: 10),
+              // Course dropdown
+              DropdownButtonFormField<String>(
+                value: _selectedCourse,
+                items:
+                    ['Flutter', 'Dart', 'React', 'Python'].map((String course) {
+                  return DropdownMenuItem<String>(
+                    value: course,
+                    child: Text(course),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCourse = value!;
+                  });
+                },
+                decoration: InputDecoration(
+                    labelText: 'Course', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 10),
+              // Terms checkbox
+              CheckboxListTile(
+                title: Text("Accept Terms"),
+                value: _isTermsAccepted,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _isTermsAccepted = value!;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              // Submit button
+              ElevatedButton(
+                onPressed: _submitForm,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal, // Corrected to backgroundColor
+                ),
+                child: Text('Submit'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+pubspec.yaml kuch update mat karo
