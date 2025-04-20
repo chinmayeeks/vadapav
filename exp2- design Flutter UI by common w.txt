@@ -1,0 +1,124 @@
+exp2- design Flutter UI by common widgets.
+MAIN.DART
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: IDCard(),
+    );
+  }
+}
+
+class IDCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("ID Card"),
+      ),
+      body: Center(
+        child: Container(
+          width: 500, // Set the width to make the card a square
+          height: 300, // Set the height to make the card a square
+          child: Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            color: Colors.grey[200], // Set background color to light grey
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage('assets/download.jpeg'),
+                  ),
+                  SizedBox(height: 20),
+                  // Name
+                  Text(
+                    'Michael Scott',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  // Date of Birth with Calendar Icon
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.calendar_today,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                      SizedBox(width: 8), // Spacer between icon and text
+                      Text(
+                        'Date of Birth: March 15, 1965',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                      SizedBox(width: 8), // Spacer between icon and text
+                      Text(
+                        'Address: 1725 Slough Avenue, Scranton, PA 18505',
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+pubspec.yaml-
+name: exp2
+description: A new Flutter project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/download.jpeg
+
+  
