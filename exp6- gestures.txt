@@ -1,0 +1,95 @@
+exp6- gestures
+main.dart-
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  static const String _title = 'Day and Night Toggle';
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: _title,
+      home: MyStatefulWidget(),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({super.key});
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  bool _isDay = true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: _isDay ? Colors.blue.shade200 : Colors.blue.shade900,
+      appBar: AppBar(
+        title: const Text('Day and Night Toggle'),
+        backgroundColor: _isDay ? Colors.orange.shade600 : Colors.blue.shade900,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              _isDay ? 'Good Morning Chinmayee!' : 'Good Night Chinmayee!',
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 20),
+            AnimatedSwitcher(
+              duration: const Duration(seconds: 1),
+              child: Icon(
+                _isDay ? Icons.wb_sunny : Icons.nights_stay,
+                key: ValueKey<bool>(_isDay), // Ensure animation works
+                color: _isDay ? Colors.yellow : Colors.white,
+                size: 100,
+              ),
+            ),
+            const SizedBox(height: 30),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isDay = !_isDay;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: _isDay ? Colors.orange.shade600 : Colors.blue.shade800,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: _isDay
+                          ? Colors.orange.shade400
+                          : Colors.blue.shade600,
+                      offset: const Offset(0, 4),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                child: Text(
+                  _isDay ? 'Switch to Night' : 'Switch to Day',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
